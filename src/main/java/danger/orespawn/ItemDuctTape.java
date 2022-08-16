@@ -1,62 +1,68 @@
 package danger.orespawn;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.block.*;
+import net.minecraft.item.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.world.*;
+import net.minecraft.init.*;
+import net.minecraft.client.renderer.texture.*;
+import cpw.mods.fml.relauncher.*;
 
-public class ItemDuctTape extends Item {
-  private Block field_150935_a;
-  
-  public ItemDuctTape(int par1, Block par2Block) {
-    this.field_150935_a = par2Block;
-  }
-  
-  public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_) {
-    Block block = p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_);
-    if (block == Blocks.snow_layer && (p_77648_3_.getBlockMetadata(p_77648_4_, p_77648_5_, p_77648_6_) & 0x7) < 1) {
-      p_77648_7_ = 1;
-    } else if (block != Blocks.vine && block != Blocks.tallgrass && block != Blocks.deadbush) {
-      if (p_77648_7_ == 0)
-        p_77648_5_--; 
-      if (p_77648_7_ == 1)
-        p_77648_5_++; 
-      if (p_77648_7_ == 2)
-        p_77648_6_--; 
-      if (p_77648_7_ == 3)
-        p_77648_6_++; 
-      if (p_77648_7_ == 4)
-        p_77648_4_--; 
-      if (p_77648_7_ == 5)
-        p_77648_4_++; 
-    } 
-    if (!p_77648_2_.canPlayerEdit(p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_1_))
-      return false; 
-    if (p_77648_1_.stackSize == 0)
-      return false; 
-    if (p_77648_3_.canPlaceEntityOnSide(this.field_150935_a, p_77648_4_, p_77648_5_, p_77648_6_, false, p_77648_7_, (Entity)null, p_77648_1_)) {
-      int i1 = this.field_150935_a.onBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_, 0);
-      if (p_77648_3_.setBlock(p_77648_4_, p_77648_5_, p_77648_6_, this.field_150935_a, i1, 3)) {
-        if (p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_) == this.field_150935_a) {
-          this.field_150935_a.onBlockPlacedBy(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, (EntityLivingBase)p_77648_2_, p_77648_1_);
-          this.field_150935_a.onPostBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, i1);
-        } 
-        p_77648_3_.playSoundEffect((p_77648_4_ + 0.5F), (p_77648_5_ + 0.5F), (p_77648_6_ + 0.5F), this.field_150935_a.stepSound.func_150496_b(), (this.field_150935_a.stepSound.getVolume() + 1.0F) / 2.0F, this.field_150935_a.stepSound.getPitch() * 0.8F);
-        p_77648_1_.stackSize--;
-      } 
-    } 
-    return true;
-  }
-  
-  @SideOnly(Side.CLIENT)
-  public void registerIcons(IIconRegister iconRegister) {
-    this.itemIcon = iconRegister.registerIcon("OreSpawn:" + getUnlocalizedName().substring(5));
-  }
+public class ItemDuctTape extends Item
+{
+    private final Block field_150935_a;
+    
+    public ItemDuctTape(final Block par2Block) {
+        this.field_150935_a = par2Block;
+    }
+    
+    public boolean onItemUse(final ItemStack p_77648_1_, final EntityPlayer p_77648_2_, final World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, final float p_77648_8_, final float p_77648_9_, final float p_77648_10_) {
+        final Block block = p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_);
+        if (block == Blocks.snow_layer && (p_77648_3_.getBlockMetadata(p_77648_4_, p_77648_5_, p_77648_6_) & 0x7) < 1) {
+            p_77648_7_ = 1;
+        }
+        else if (block != Blocks.vine && block != Blocks.tallgrass && block != Blocks.deadbush) {
+            if (p_77648_7_ == 0) {
+                --p_77648_5_;
+            }
+            if (p_77648_7_ == 1) {
+                ++p_77648_5_;
+            }
+            if (p_77648_7_ == 2) {
+                --p_77648_6_;
+            }
+            if (p_77648_7_ == 3) {
+                ++p_77648_6_;
+            }
+            if (p_77648_7_ == 4) {
+                --p_77648_4_;
+            }
+            if (p_77648_7_ == 5) {
+                ++p_77648_4_;
+            }
+        }
+        if (!p_77648_2_.canPlayerEdit(p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_1_)) {
+            return false;
+        }
+        if (p_77648_1_.stackSize == 0) {
+            return false;
+        }
+        if (p_77648_3_.canPlaceEntityOnSide(this.field_150935_a, p_77648_4_, p_77648_5_, p_77648_6_, false, p_77648_7_, null, p_77648_1_)) {
+            final int i1 = this.field_150935_a.onBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_7_, p_77648_8_, p_77648_9_, p_77648_10_, 0);
+            if (p_77648_3_.setBlock(p_77648_4_, p_77648_5_, p_77648_6_, this.field_150935_a, i1, 3)) {
+                if (p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_) == this.field_150935_a) {
+                    this.field_150935_a.onBlockPlacedBy(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, p_77648_2_, p_77648_1_);
+                    this.field_150935_a.onPostBlockPlaced(p_77648_3_, p_77648_4_, p_77648_5_, p_77648_6_, i1);
+                }
+                p_77648_3_.playSoundEffect(p_77648_4_ + 0.5f, p_77648_5_ + 0.5f, p_77648_6_ + 0.5f, this.field_150935_a.stepSound.func_150496_b(), (this.field_150935_a.stepSound.getVolume() + 1.0f) / 2.0f, this.field_150935_a.stepSound.getPitch() * 0.8f);
+                --p_77648_1_.stackSize;
+            }
+        }
+        return true;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(final IIconRegister iconRegister) {
+        this.itemIcon = iconRegister.registerIcon("OreSpawn:" + this.getUnlocalizedName().substring(5));
+    }
 }

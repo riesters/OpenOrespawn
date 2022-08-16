@@ -1,57 +1,53 @@
 package danger.orespawn;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ItemSword;
-import net.minecraft.world.World;
+import net.minecraft.creativetab.*;
+import net.minecraft.item.*;
+import net.minecraft.world.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.entity.*;
+import net.minecraft.client.renderer.texture.*;
+import cpw.mods.fml.relauncher.*;
 
-public class EmeraldSword extends ItemSword {
-  private int weaponDamage;
-  
-  private final Item.ToolMaterial toolMaterial;
-  
-  public EmeraldSword(int par1, Item.ToolMaterial par2EnumToolMaterial) {
-    super(par2EnumToolMaterial);
-    this.toolMaterial = par2EnumToolMaterial;
-    this.weaponDamage = 15;
-    this.maxStackSize = 1;
-    setMaxDamage(1300);
-    setCreativeTab(CreativeTabs.tabCombat);
-  }
-  
-  public void onCreated(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {}
-  
-  public void onUsingTick(ItemStack stack, EntityPlayer player, int count) {}
-  
-  public void onUpdate(ItemStack stack, World par2World, Entity par3Entity, int par4, boolean par5) {}
-  
-  public int getDamageVsEntity(Entity par1Entity) {
-    return this.weaponDamage;
-  }
-  
-  public String getMaterialName() {
-    return "Emerald";
-  }
-  
-  public boolean hitEntity(ItemStack par1ItemStack, EntityLiving par2EntityLiving, EntityLiving par3EntityLiving) {
-    par1ItemStack.damageItem(1, (EntityLivingBase)par3EntityLiving);
-    return true;
-  }
-  
-  public int getMaxItemUseDuration(ItemStack par1ItemStack) {
-    return 3000;
-  }
-  
-  @SideOnly(Side.CLIENT)
-  public void registerIcons(IIconRegister iconRegister) {
-    this.itemIcon = iconRegister.registerIcon("OreSpawn:" + getUnlocalizedName().substring(5));
-  }
+public class EmeraldSword extends ItemSword
+{
+    private final int weaponDamage;
+
+    public EmeraldSword(final Item.ToolMaterial par2EnumToolMaterial) {
+        super(par2EnumToolMaterial);
+        this.weaponDamage = 15;
+        this.maxStackSize = 1;
+        this.setMaxDamage(1300);
+        this.setCreativeTab(CreativeTabs.tabCombat);
+    }
+    
+    public void onCreated(final ItemStack par1ItemStack, final World par2World, final EntityPlayer par3EntityPlayer) {
+    }
+    
+    public void onUsingTick(final ItemStack stack, final EntityPlayer player, final int count) {
+    }
+    
+    public void onUpdate(final ItemStack stack, final World par2World, final Entity par3Entity, final int par4, final boolean par5) {
+    }
+    
+    public int getDamageVsEntity() {
+        return this.weaponDamage;
+    }
+    
+    public String getMaterialName() {
+        return "Emerald";
+    }
+    
+    public boolean hitEntity(final ItemStack par1ItemStack, final EntityLiving par3EntityLiving) {
+        par1ItemStack.damageItem(1, par3EntityLiving);
+        return true;
+    }
+    
+    public int getMaxItemUseDuration(final ItemStack par1ItemStack) {
+        return 3000;
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(final IIconRegister iconRegister) {
+        this.itemIcon = iconRegister.registerIcon("OreSpawn:" + this.getUnlocalizedName().substring(5));
+    }
 }

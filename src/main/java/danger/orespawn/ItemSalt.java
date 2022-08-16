@@ -1,18 +1,18 @@
 package danger.orespawn;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
+import net.minecraft.item.*;
+import net.minecraft.creativetab.*;
+import net.minecraft.client.renderer.texture.*;
+import cpw.mods.fml.relauncher.*;
 
-public class ItemSalt extends Item {
-  public ItemSalt(int i) {
-    setCreativeTab(CreativeTabs.tabMaterials);
-  }
-  
-  @SideOnly(Side.CLIENT)
-  public void registerIcons(IIconRegister iconRegister) {
-    this.itemIcon = iconRegister.registerIcon("OreSpawn:" + getUnlocalizedName().substring(5));
-  }
+public class ItemSalt extends Item
+{
+    public ItemSalt() {
+        this.setCreativeTab(CreativeTabs.tabMaterials);
+    }
+    
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(final IIconRegister iconRegister) {
+        this.itemIcon = iconRegister.registerIcon("OreSpawn:" + this.getUnlocalizedName().substring(5));
+    }
 }

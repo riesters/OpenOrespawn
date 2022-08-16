@@ -1,366 +1,344 @@
 package danger.orespawn;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.EntityAIAvoidEntity;
-import net.minecraft.entity.ai.EntityAIBase;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
-import net.minecraft.entity.ai.EntityAIMoveIndoors;
-import net.minecraft.entity.ai.EntityAIPanic;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.ai.EntityAITempt;
-import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityAnimal;
-import net.minecraft.entity.passive.EntityTameable;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
+import net.minecraft.entity.passive.*;
+import net.minecraft.entity.monster.*;
+import net.minecraft.entity.player.*;
+import net.minecraft.entity.ai.*;
+import net.minecraft.util.*;
+import net.minecraft.init.*;
+import net.minecraft.block.*;
+import net.minecraft.item.*;
+import net.minecraft.entity.*;
 
-public class Camarasaurus extends EntityTameable {
-  private float moveSpeed = 0.2F;
-  
-  private int closest;
-  
-  private int tx;
-  
-  private int ty;
-  
-  private int tz;
-  
-  public Camarasaurus(World par1World) {
-    super(par1World);
-    this.closest = 99999;
-    this.tx = 0;
-    this.ty = 0;
-    this.tz = 0;
-    setSize(0.5F, 1.2F);
-    this.moveSpeed = 0.2F;
-    this.fireResistance = 100;
-    getNavigator().setAvoidsWater(true);
-    setSitting(false);
-    this.experienceValue = 5;
-    this.tasks.addTask(0, (EntityAIBase)new EntityAISwimming((EntityLiving)this));
-    this.tasks.addTask(1, (EntityAIBase)new EntityAIMate((EntityAnimal)this, 1.0D));
-    this.tasks.addTask(2, new MyEntityAIFollowOwner(this, 2.0F, 10.0F, 2.0F));
-    this.tasks.addTask(3, (EntityAIBase)new EntityAIAvoidEntity((EntityCreature)this, EntityMob.class, 8.0F, 1.0D, 1.399999976158142D));
-    this.tasks.addTask(4, (EntityAIBase)new EntityAITempt((EntityCreature)this, 1.2000000476837158D, Items.apple, false));
-    this.tasks.addTask(5, (EntityAIBase)new EntityAIPanic((EntityCreature)this, 1.5D));
-    this.tasks.addTask(6, (EntityAIBase)new EntityAIWatchClosest((EntityLiving)this, EntityPlayer.class, 6.0F));
-    this.tasks.addTask(7, new MyEntityAIWander((EntityCreature)this, 1.0F));
-    this.tasks.addTask(8, (EntityAIBase)new EntityAILookIdle((EntityLiving)this));
-    this.tasks.addTask(9, (EntityAIBase)new EntityAIMoveIndoors((EntityCreature)this));
-  }
-  
-  protected void applyEntityAttributes() {
-    super.applyEntityAttributes();
-    getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(mygetMaxHealth());
-    getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(this.moveSpeed);
-    getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage);
-    getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1.0D);
-  }
-  
-  protected void entityInit() {
-    super.entityInit();
-    setSitting(false);
-  }
-  
-  public boolean getCanSpawnHere() {
-    if (this.posY < 50.0D)
-      return false; 
-    if (!this.worldObj.isDaytime())
-      return false; 
-    return true;
-  }
-  
-  public void onUpdate() {
-    getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(this.moveSpeed);
-    super.onUpdate();
-  }
-  
-  protected void fall(float par1) {
-    float i = MathHelper.ceiling_float_int(par1 - 3.0F);
-    if (i > 0.0F) {
-      if (i > 3.0F) {
-        playSound("damage.fallbig", 1.0F, 1.0F);
-      } else {
-        playSound("damage.fallsmall", 1.0F, 1.0F);
-      } 
-      if (i > 2.0F)
-        i = 2.0F; 
-      attackEntityFrom(DamageSource.fall, i);
-    } 
-  }
-  
-  private boolean scan_it(int x, int y, int z, int dx, int dy, int dz) {
-    int found = 0;
-    int i;
-    for (i = -dy; i <= dy; i++) {
-      for (int j = -dz; j <= dz; j++) {
-        Block bid = this.worldObj.getBlock(x + dx, y + i, z + j);
-        if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
-          int d = dx * dx + j * j + i * i;
-          if (d < this.closest) {
-            this.closest = d;
-            this.tx = x + dx;
-            this.ty = y + i;
-            this.tz = z + j;
-            found++;
-          } 
-        } 
-        bid = this.worldObj.getBlock(x - dx, y + i, z + j);
-        if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
-          int d = dx * dx + j * j + i * i;
-          if (d < this.closest) {
-            this.closest = d;
-            this.tx = x - dx;
-            this.ty = y + i;
-            this.tz = z + j;
-            found++;
-          } 
-        } 
-      } 
-    } 
-    for (i = -dx; i <= dx; i++) {
-      for (int j = -dz; j <= dz; j++) {
-        Block bid = this.worldObj.getBlock(x + i, y + dy, z + j);
-        if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
-          int d = dy * dy + j * j + i * i;
-          if (d < this.closest) {
-            this.closest = d;
-            this.tx = x + i;
-            this.ty = y + dy;
-            this.tz = z + j;
-            found++;
-          } 
-        } 
-        bid = this.worldObj.getBlock(x + i, y - dy, z + j);
-        if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
-          int d = dy * dy + j * j + i * i;
-          if (d < this.closest) {
-            this.closest = d;
-            this.tx = x + i;
-            this.ty = y - dy;
-            this.tz = z + j;
-            found++;
-          } 
-        } 
-      } 
-    } 
-    for (i = -dx; i <= dx; i++) {
-      for (int j = -dy; j <= dy; j++) {
-        Block bid = this.worldObj.getBlock(x + i, y + j, z + dz);
-        if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
-          int d = dz * dz + j * j + i * i;
-          if (d < this.closest) {
-            this.closest = d;
-            this.tx = x + i;
-            this.ty = y + j;
-            this.tz = z + dz;
-            found++;
-          } 
-        } 
-        bid = this.worldObj.getBlock(x + i, y + j, z - dz);
-        if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
-          int d = dz * dz + j * j + i * i;
-          if (d < this.closest) {
-            this.closest = d;
-            this.tx = x + i;
-            this.ty = y + j;
-            this.tz = z - dz;
-            found++;
-          } 
-        } 
-      } 
-    } 
-    if (found != 0)
-      return true; 
-    return false;
-  }
-  
-  protected void updateAITick() {
-    if (this.isDead)
-      return; 
-    if (this.worldObj.rand.nextInt(200) == 1)
-      setRevengeTarget(null); 
-    super.updateAITick();
-    if (!isSitting() && ((
-      this.worldObj.rand.nextInt(20) == 0 && getCamarasaurusHealth() < mygetMaxHealth()) || this.worldObj.rand.nextInt(250) == 0))
-      if (OreSpawnMain.PlayNicely == 0) {
+public class Camarasaurus extends EntityTameable
+{
+    private float moveSpeed;
+    private int closest;
+    private int tx;
+    private int ty;
+    private int tz;
+    
+    public Camarasaurus(final World par1World) {
+        super(par1World);
+        this.moveSpeed = 0.2f;
         this.closest = 99999;
-        this.tx = this.ty = this.tz = 0;
-        for (int i = 1; i < 11; i++) {
-          int j = i;
-          if (j > 2)
-            j = 2; 
-          if (scan_it((int)this.posX, (int)this.posY + 1, (int)this.posZ, i, j, i) == true)
-            break; 
-          if (i >= 6)
-            i++; 
-        } 
-        if (this.closest < 99999) {
-          getNavigator().tryMoveToXYZ(this.tx, this.ty, this.tz, 1.0D);
-          if (this.closest < 12) {
-            if (this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing"))
-              this.worldObj.setBlock(this.tx, this.ty, this.tz, Blocks.air, 0, 2); 
-            heal(1.0F);
-            playSound("random.burp", 1.0F, this.worldObj.rand.nextFloat() * 0.2F + 0.9F);
-          } 
-        } 
-      }  
-  }
-  
-  public boolean isAIEnabled() {
-    return true;
-  }
-  
-  public boolean canBreatheUnderwater() {
-    return false;
-  }
-  
-  public int mygetMaxHealth() {
-    return 20;
-  }
-  
-  public int getCamarasaurusHealth() {
-    return (int)getHealth();
-  }
-  
-  public boolean interact(EntityPlayer par1EntityPlayer) {
-    ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
-    if (var2 != null)
-      if (var2.stackSize <= 0) {
-        par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null);
-        var2 = null;
-      }  
-    if (super.interact(par1EntityPlayer))
-      return true; 
-    if (var2 != null && var2.getItem() == Items.apple && par1EntityPlayer.getDistanceSqToEntity((Entity)this) < 16.0D) {
-      if (!isTamed()) {
-        if (!this.worldObj.isRemote)
-          if (this.rand.nextInt(2) == 0) {
-            setTamed(true);
-            func_152115_b(par1EntityPlayer.getUniqueID().toString());
-            playTameEffect(true);
-            this.worldObj.setEntityState((Entity)this, (byte)7);
-            heal(mygetMaxHealth() - getHealth());
-          } else {
-            playTameEffect(false);
-            this.worldObj.setEntityState((Entity)this, (byte)6);
-          }  
-      } else if (func_152114_e((EntityLivingBase)par1EntityPlayer)) {
-        if (this.worldObj.isRemote) {
-          playTameEffect(true);
-          this.worldObj.setEntityState((Entity)this, (byte)7);
-        } 
-        if (mygetMaxHealth() > getHealth())
-          heal(mygetMaxHealth() - getHealth()); 
-      } 
-      if (!par1EntityPlayer.capabilities.isCreativeMode) {
-        var2.stackSize--;
-        if (var2.stackSize <= 0)
-          par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null); 
-      } 
-      return true;
-    } 
-    if (isTamed() && var2 != null && var2.getItem() == Items.name_tag && par1EntityPlayer.getDistanceSqToEntity((Entity)this) < 16.0D && func_152114_e((EntityLivingBase)par1EntityPlayer)) {
-      setCustomNameTag(var2.getDisplayName());
-      if (!par1EntityPlayer.capabilities.isCreativeMode) {
-        var2.stackSize--;
-        if (var2.stackSize <= 0)
-          par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, (ItemStack)null); 
-      } 
-      return true;
-    } 
-    if (isTamed() && func_152114_e((EntityLivingBase)par1EntityPlayer) && par1EntityPlayer.getDistanceSqToEntity((Entity)this) < 16.0D) {
-      if (!isSitting()) {
-        setSitting(true);
-      } else {
-        setSitting(false);
-      } 
-      return true;
-    } 
-    return false;
-  }
-  
-  protected String getLivingSound() {
-    if (isSitting())
-      return null; 
-    return null;
-  }
-  
-  protected String getHurtSound() {
-    return "orespawn:cryo_hurt";
-  }
-  
-  protected String getDeathSound() {
-    return "orespawn:cryo_death";
-  }
-  
-  protected float getSoundVolume() {
-    return 0.4F;
-  }
-  
-  protected Item getDropItem() {
-    return Item.getItemFromBlock((Block)Blocks.red_flower);
-  }
-  
-  protected void dropFewItems(boolean par1, int par2) {
-    int var3 = 0;
-    if (isTamed()) {
-      var3 = this.rand.nextInt(5);
-      var3 += 2;
-      for (int var4 = 0; var4 < var3; var4++)
-        dropItem(Item.getItemFromBlock((Block)Blocks.red_flower), 1); 
-    } 
-  }
-  
-  protected float getSoundPitch() {
-    return isChild() ? ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F + 1.5F) : ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1F + 1.0F);
-  }
-  
-  public boolean attackEntityFrom(DamageSource par1DamageSource, float par2) {
-    boolean ret = false;
-    ret = super.attackEntityFrom(par1DamageSource, par2);
-    return ret;
-  }
-  
-  protected boolean canDespawn() {
-    if (isChild()) {
-      func_110163_bv();
-      return false;
-    } 
-    if (isNoDespawnRequired())
-      return false; 
-    if (isTamed())
-      return false; 
-    return true;
-  }
-  
-  public EntityAgeable createChild(EntityAgeable entityageable) {
-    return (EntityAgeable)spawnBabyAnimal(entityageable);
-  }
-  
-  public Camarasaurus spawnBabyAnimal(EntityAgeable par1EntityAgeable) {
-    return new Camarasaurus(this.worldObj);
-  }
-  
-  public boolean isWheat(ItemStack par1ItemStack) {
-    return (par1ItemStack != null && par1ItemStack.getItem() == Items.apple);
-  }
-  
-  public boolean isBreedingItem(ItemStack par1ItemStack) {
-    return (par1ItemStack.getItem() == OreSpawnMain.MyCrystalApple);
-  }
+        this.tx = 0;
+        this.ty = 0;
+        this.tz = 0;
+        this.setSize(0.5f, 1.2f);
+        this.moveSpeed = 0.2f;
+        this.fireResistance = 100;
+        this.getNavigator().setAvoidsWater(true);
+        this.setSitting(false);
+        this.experienceValue = 5;
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(1, new EntityAIMate(this, 1.0));
+        this.tasks.addTask(2, new MyEntityAIFollowOwner(this, 2.0f, 10.0f, 2.0f));
+        this.tasks.addTask(3, new EntityAIAvoidEntity(this, EntityMob.class, 8.0f, 1.0, 1.399999976158142));
+        this.tasks.addTask(4, new EntityAITempt(this, 1.2000000476837158, Items.apple, false));
+        this.tasks.addTask(5, new EntityAIPanic(this, 1.5));
+        this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0f));
+        this.tasks.addTask(7, new MyEntityAIWander(this, 1.0f));
+        this.tasks.addTask(8, new EntityAILookIdle(this));
+        this.tasks.addTask(9, new EntityAIMoveIndoors(this));
+    }
+    
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(this.mygetMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(this.moveSpeed);
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.attackDamage);
+        this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(1.0);
+    }
+    
+    protected void entityInit() {
+        super.entityInit();
+        this.setSitting(false);
+    }
+    
+    public boolean getCanSpawnHere() {
+        return this.posY >= 50.0 && this.worldObj.isDaytime();
+    }
+    
+    public void onUpdate() {
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(this.moveSpeed);
+        super.onUpdate();
+    }
+    
+    protected void fall(final float par1) {
+        float i = (float)MathHelper.ceiling_float_int(par1 - 3.0f);
+        if (i > 0.0f) {
+            if (i > 3.0f) {
+                this.playSound("damage.fallbig", 1.0f, 1.0f);
+            }
+            else {
+                this.playSound("damage.fallsmall", 1.0f, 1.0f);
+            }
+            if (i > 2.0f) {
+                i = 2.0f;
+            }
+            this.attackEntityFrom(DamageSource.fall, i);
+        }
+    }
+    
+    private boolean scan_it(final int x, final int y, final int z, final int dx, final int dy, final int dz) {
+        int found = 0;
+        for (int i = -dy; i <= dy; ++i) {
+            for (int j = -dz; j <= dz; ++j) {
+                Block bid = this.worldObj.getBlock(x + dx, y + i, z + j);
+                int i1 = dx * dx + j * j + i * i;
+                if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
+                    if (i1 < this.closest) {
+                        this.closest = i1;
+                        this.tx = x + dx;
+                        this.ty = y + i;
+                        this.tz = z + j;
+                        ++found;
+                    }
+                }
+                bid = this.worldObj.getBlock(x - dx, y + i, z + j);
+                if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
+                    if (i1 < this.closest) {
+                        this.closest = i1;
+                        this.tx = x - dx;
+                        this.ty = y + i;
+                        this.tz = z + j;
+                        ++found;
+                    }
+                }
+            }
+        }
+        for (int i = -dx; i <= dx; ++i) {
+            for (int j = -dz; j <= dz; ++j) {
+                Block bid = this.worldObj.getBlock(x + i, y + dy, z + j);
+                int i1 = dy * dy + j * j + i * i;
+                if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
+                    if (i1 < this.closest) {
+                        this.closest = i1;
+                        this.tx = x + i;
+                        this.ty = y + dy;
+                        this.tz = z + j;
+                        ++found;
+                    }
+                }
+                bid = this.worldObj.getBlock(x + i, y - dy, z + j);
+                if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
+                    if (i1 < this.closest) {
+                        this.closest = i1;
+                        this.tx = x + i;
+                        this.ty = y - dy;
+                        this.tz = z + j;
+                        ++found;
+                    }
+                }
+            }
+        }
+        for (int i = -dx; i <= dx; ++i) {
+            for (int j = -dy; j <= dy; ++j) {
+                Block bid = this.worldObj.getBlock(x + i, y + j, z + dz);
+                int i1 = dz * dz + j * j + i * i;
+                if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
+                    if (i1 < this.closest) {
+                        this.closest = i1;
+                        this.tx = x + i;
+                        this.ty = y + j;
+                        this.tz = z + dz;
+                        ++found;
+                    }
+                }
+                bid = this.worldObj.getBlock(x + i, y + j, z - dz);
+                if (bid == Blocks.leaves || bid == Blocks.vine || bid == Blocks.tallgrass || bid == Blocks.cactus || bid == Blocks.double_plant) {
+                    if (i1 < this.closest) {
+                        this.closest = i1;
+                        this.tx = x + i;
+                        this.ty = y + j;
+                        this.tz = z - dz;
+                        ++found;
+                    }
+                }
+            }
+        }
+        return found != 0;
+    }
+    
+    protected void updateAITick() {
+        if (this.isDead) {
+            return;
+        }
+        if (this.worldObj.rand.nextInt(200) == 1) {
+            this.setRevengeTarget(null);
+        }
+        super.updateAITick();
+        if (!this.isSitting() && ((this.worldObj.rand.nextInt(20) == 0 && this.getCamarasaurusHealth() < this.mygetMaxHealth()) || this.worldObj.rand.nextInt(250) == 0) && OreSpawnMain.PlayNicely == 0) {
+            this.closest = 99999;
+            final int tx = 0;
+            this.tz = tx;
+            this.ty = tx;
+            this.tx = tx;
+            for (int i = 1; i < 11; ++i) {
+                int j = i;
+                if (j > 2) {
+                    j = 2;
+                }
+                if (this.scan_it((int)this.posX, (int)this.posY + 1, (int)this.posZ, i, j, i)) {
+                    break;
+                }
+                if (i >= 6) {
+                    ++i;
+                }
+            }
+            if (this.closest < 99999) {
+                this.getNavigator().tryMoveToXYZ(this.tx, this.ty, this.tz, 1.0);
+                if (this.closest < 12) {
+                    if (this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+                        this.worldObj.setBlock(this.tx, this.ty, this.tz, Blocks.air, 0, 2);
+                    }
+                    this.heal(1.0f);
+                    this.playSound("random.burp", 1.0f, this.worldObj.rand.nextFloat() * 0.2f + 0.9f);
+                }
+            }
+        }
+    }
+    
+    public boolean isAIEnabled() {
+        return true;
+    }
+    
+    public boolean canBreatheUnderwater() {
+        return false;
+    }
+    
+    public int mygetMaxHealth() {
+        return 20;
+    }
+    
+    public int getCamarasaurusHealth() {
+        return (int)this.getHealth();
+    }
+    
+    public boolean interact(final EntityPlayer par1EntityPlayer) {
+        ItemStack var2 = par1EntityPlayer.inventory.getCurrentItem();
+        if (var2 != null && var2.stackSize <= 0) {
+            par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
+            var2 = null;
+        }
+        if (super.interact(par1EntityPlayer)) {
+            return true;
+        }
+        if (var2 != null && var2.getItem() == Items.apple && par1EntityPlayer.getDistanceSqToEntity(this) < 16.0) {
+            if (!this.isTamed()) {
+                if (!this.worldObj.isRemote) {
+                    if (this.rand.nextInt(2) == 0) {
+                        this.setTamed(true);
+                        this.func_152115_b(par1EntityPlayer.getUniqueID().toString());
+                        this.playTameEffect(true);
+                        this.worldObj.setEntityState(this, (byte)7);
+                        this.heal(this.mygetMaxHealth() - this.getHealth());
+                    }
+                    else {
+                        this.playTameEffect(false);
+                        this.worldObj.setEntityState(this, (byte)6);
+                    }
+                }
+            }
+            else if (this.func_152114_e(par1EntityPlayer)) {
+                if (this.worldObj.isRemote) {
+                    this.playTameEffect(true);
+                    this.worldObj.setEntityState(this, (byte)7);
+                }
+                if (this.mygetMaxHealth() > this.getHealth()) {
+                    this.heal(this.mygetMaxHealth() - this.getHealth());
+                }
+            }
+            if (!par1EntityPlayer.capabilities.isCreativeMode) {
+                --var2.stackSize;
+                if (var2.stackSize <= 0) {
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
+                }
+            }
+            return true;
+        }
+        if (this.isTamed() && var2 != null && var2.getItem() == Items.name_tag && par1EntityPlayer.getDistanceSqToEntity(this) < 16.0 && this.func_152114_e(par1EntityPlayer)) {
+            this.setCustomNameTag(var2.getDisplayName());
+            if (!par1EntityPlayer.capabilities.isCreativeMode) {
+                --var2.stackSize;
+                if (var2.stackSize <= 0) {
+                    par1EntityPlayer.inventory.setInventorySlotContents(par1EntityPlayer.inventory.currentItem, null);
+                }
+            }
+            return true;
+        }
+        if (this.isTamed() && this.func_152114_e(par1EntityPlayer) && par1EntityPlayer.getDistanceSqToEntity(this) < 16.0) {
+            this.setSitting(!this.isSitting());
+            return true;
+        }
+        return false;
+    }
+    
+    protected String getLivingSound() {
+        this.isSitting();
+        return null;
+    }
+    
+    protected String getHurtSound() {
+        return "orespawn:cryo_hurt";
+    }
+    
+    protected String getDeathSound() {
+        return "orespawn:cryo_death";
+    }
+    
+    protected float getSoundVolume() {
+        return 0.4f;
+    }
+    
+    protected Item getDropItem() {
+        return Item.getItemFromBlock(Blocks.red_flower);
+    }
+    
+    protected void dropFewItems(final boolean par1, final int par2) {
+        int var3;
+        if (this.isTamed()) {
+            var3 = this.rand.nextInt(5);
+            var3 += 2;
+            for (int var4 = 0; var4 < var3; ++var4) {
+                this.dropItem(Item.getItemFromBlock(Blocks.red_flower), 1);
+            }
+        }
+    }
+    
+    protected float getSoundPitch() {
+        return this.isChild() ? ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f + 1.5f) : ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.1f + 1.0f);
+    }
+    
+    public boolean attackEntityFrom(final DamageSource par1DamageSource, final float par2) {
+        boolean ret;
+        ret = super.attackEntityFrom(par1DamageSource, par2);
+        return ret;
+    }
+    
+    protected boolean canDespawn() {
+        if (this.isChild()) {
+            this.func_110163_bv();
+            return false;
+        }
+        return !this.isNoDespawnRequired() && !this.isTamed();
+    }
+    
+    public EntityAgeable createChild(final EntityAgeable entityageable) {
+        return this.spawnBabyAnimal();
+    }
+    
+    public Camarasaurus spawnBabyAnimal() {
+        return new Camarasaurus(this.worldObj);
+    }
+    
+    public boolean isWheat(final ItemStack par1ItemStack) {
+        return par1ItemStack != null && par1ItemStack.getItem() == Items.apple;
+    }
+    
+    public boolean isBreedingItem(final ItemStack par1ItemStack) {
+        return par1ItemStack.getItem() == OreSpawnMain.MyCrystalApple;
+    }
 }

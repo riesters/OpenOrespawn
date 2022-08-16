@@ -1,7 +1,9 @@
 package danger.orespawn;
 
-import net.minecraftforge.client.event.sound.SoundLoadEvent;
+import net.minecraftforge.client.event.sound.*;
 
-public class OreSpawnSounds {
-  public void onSound(SoundLoadEvent event) {}
+public class OreSpawnSounds
+{
+    public void onSound(final SoundLoadEvent event) {
+    }
 }

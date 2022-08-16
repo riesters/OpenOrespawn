@@ -1,47 +1,46 @@
 package danger.orespawn;
 
-import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.ResourceLocation;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.util.*;
+import org.lwjgl.opengl.*;
+import net.minecraft.entity.*;
 
-public class RenderCrab extends RenderLiving {
-  protected ModelCrab model;
-  
-  private float scale = 1.0F;
-  
-  private static final ResourceLocation texture = new ResourceLocation("orespawn", "RobotCrabtexture.png");
-  
-  public RenderCrab(ModelCrab par1ModelBase, float par2, float par3) {
-    super(par1ModelBase, par2 * par3);
-    this.model = (ModelCrab)this.mainModel;
-    this.scale = par3;
-  }
-  
-  public void renderCrab(Crab par1EntityCrab, double par2, double par4, double par6, float par8, float par9) {
-    super.doRender((EntityLiving)par1EntityCrab, par2, par4, par6, par8, par9);
-  }
-  
-  public void doRender(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
-    renderCrab((Crab)par1EntityLiving, par2, par4, par6, par8, par9);
-  }
-  
-  public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
-    renderCrab((Crab)par1Entity, par2, par4, par6, par8, par9);
-  }
-  
-  protected void preRenderScale(Crab par1Entity, float par2) {
-    float pscale = par1Entity.getCrabScale();
-    GL11.glScalef(pscale, pscale, pscale);
-  }
-  
-  protected void preRenderCallback(EntityLivingBase par1EntityLiving, float par2) {
-    preRenderScale((Crab)par1EntityLiving, par2);
-  }
-  
-  protected ResourceLocation getEntityTexture(Entity entity) {
-    return texture;
-  }
+public class RenderCrab extends RenderLiving
+{
+    protected ModelCrab model;
+    private static final ResourceLocation texture;
+    
+    public RenderCrab(final ModelCrab par1ModelBase, final float par2, final float par3) {
+        super(par1ModelBase, par2 * par3);
+        this.model = (ModelCrab)this.mainModel;
+    }
+    
+    public void renderCrab(final Crab par1EntityCrab, final double par2, final double par4, final double par6, final float par8, final float par9) {
+        super.doRender(par1EntityCrab, par2, par4, par6, par8, par9);
+    }
+    
+    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9) {
+        this.renderCrab((Crab)par1EntityLiving, par2, par4, par6, par8, par9);
+    }
+    
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9) {
+        this.renderCrab((Crab)par1Entity, par2, par4, par6, par8, par9);
+    }
+    
+    protected void preRenderScale(final Crab par1Entity) {
+        final float pscale = par1Entity.getCrabScale();
+        GL11.glScalef(pscale, pscale, pscale);
+    }
+    
+    protected void preRenderCallback(final EntityLivingBase par1EntityLiving, final float par2) {
+        this.preRenderScale((Crab)par1EntityLiving);
+    }
+    
+    protected ResourceLocation getEntityTexture(final Entity entity) {
+        return RenderCrab.texture;
+    }
+    
+    static {
+        texture = new ResourceLocation("orespawn", "RobotCrabtexture.png");
+    }
 }

@@ -1,34 +1,34 @@
 package danger.orespawn;
 
-import net.minecraft.client.model.ModelSpider;
-import net.minecraft.client.renderer.entity.RenderSpider;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.monster.EntitySpider;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.util.*;
+import net.minecraft.client.model.*;
+import net.minecraft.entity.*;
 
-public class RenderSpiderDriver extends RenderSpider {
-  private static final ResourceLocation texture = new ResourceLocation("orespawn", "spiderdriver.png");
-  
-  public RenderSpiderDriver(ModelSpider modelSpider, float par2) {}
-  
-  public void renderSpiderDriver(SpiderDriver par1EntitySpiderDriver, double par2, double par4, double par6, float par8, float par9) {
-    super.doRender((EntityLiving)par1EntitySpiderDriver, par2, par4, par6, par8, par9);
-  }
-  
-  public void doRender(EntityLiving par1EntityLiving, double par2, double par4, double par6, float par8, float par9) {
-    renderSpiderDriver((SpiderDriver)par1EntityLiving, par2, par4, par6, par8, par9);
-  }
-  
-  public void doRender(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
-    renderSpiderDriver((SpiderDriver)par1Entity, par2, par4, par6, par8, par9);
-  }
-  
-  protected ResourceLocation getEntityTexture(Entity entity) {
-    return texture;
-  }
-  
-  protected ResourceLocation getSpiderTextures(EntitySpider par1EntitySpider) {
-    return texture;
-  }
+public class RenderSpiderDriver extends RenderSpider
+{
+    private static final ResourceLocation texture;
+    
+    public RenderSpiderDriver(final ModelSpider modelSpider) {
+    }
+    
+    public void renderSpiderDriver(final SpiderDriver par1EntitySpiderDriver, final double par2, final double par4, final double par6, final float par8, final float par9) {
+        super.doRender(par1EntitySpiderDriver, par2, par4, par6, par8, par9);
+    }
+    
+    public void doRender(final EntityLiving par1EntityLiving, final double par2, final double par4, final double par6, final float par8, final float par9) {
+        this.renderSpiderDriver((SpiderDriver)par1EntityLiving, par2, par4, par6, par8, par9);
+    }
+    
+    public void doRender(final Entity par1Entity, final double par2, final double par4, final double par6, final float par8, final float par9) {
+        this.renderSpiderDriver((SpiderDriver)par1Entity, par2, par4, par6, par8, par9);
+    }
+    
+    protected ResourceLocation getEntityTexture(final Entity entity) {
+        return RenderSpiderDriver.texture;
+    }
+
+    static {
+        texture = new ResourceLocation("orespawn", "spiderdriver.png");
+    }
 }

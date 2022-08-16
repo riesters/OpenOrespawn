@@ -1,47 +1,52 @@
 package danger.orespawn;
 
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityTameable;
+import net.minecraft.entity.passive.*;
+import net.minecraft.entity.*;
 
-public class MyEntityAIJealousy extends MyEntityAINearestAttackableTarget {
-  private EntityTameable theTameable;
-  
-  public MyEntityAIJealousy(EntityTameable par1EntityTameable, Class par2Class, float par3, int par4, boolean par5) {
-    super((EntityLiving)par1EntityTameable, par2Class, par3, par4, par5);
-    this.theTameable = par1EntityTameable;
-  }
-  
-  public boolean shouldExecute() {
-    EntityTameable te = (EntityTameable)this.taskOwner;
-    Girlfriend gf = null;
-    Boyfriend bf = null;
-    EntityLivingBase ep = null;
-    if (te == null)
-      return false; 
-    if (!te.isTamed())
-      return false; 
-    if (te.isSitting())
-      return false; 
-    if (!super.shouldExecute())
-      return false; 
-    EntityLiving entityLiving = this.targetEntity;
-    if (entityLiving == null)
-      return false; 
-    if (te instanceof Girlfriend) {
-      if (entityLiving instanceof Girlfriend) {
-        gf = (Girlfriend)entityLiving;
-        if (gf.isTamed())
-          return false; 
-      } 
-    } else if (entityLiving instanceof Boyfriend) {
-      bf = (Boyfriend)entityLiving;
-      if (bf.isTamed())
-        return false; 
-    } 
-    ep = te.getOwner();
-    if (ep == null)
-      return false; 
-    return true;
-  }
+public class MyEntityAIJealousy extends MyEntityAINearestAttackableTarget
+{
+
+    public MyEntityAIJealousy(final EntityTameable par1EntityTameable, final Class par2Class, final float par3, final int par4, final boolean par5) {
+        super(par1EntityTameable, par2Class, par3, par4, par5);
+    }
+    
+    @Override
+    public boolean shouldExecute() {
+        final EntityTameable te = (EntityTameable)this.taskOwner;
+        Girlfriend gf;
+        Boyfriend bf;
+        EntityLivingBase ep;
+        if (te == null) {
+            return false;
+        }
+        if (!te.isTamed()) {
+            return false;
+        }
+        if (te.isSitting()) {
+            return false;
+        }
+        if (!super.shouldExecute()) {
+            return false;
+        }
+        final Entity victim = this.targetEntity;
+        if (victim == null) {
+            return false;
+        }
+        if (te instanceof Girlfriend) {
+            if (victim instanceof Girlfriend) {
+                gf = (Girlfriend)victim;
+                if (gf.isTamed()) {
+                    return false;
+                }
+            }
+        }
+        else if (victim instanceof Boyfriend) {
+            bf = (Boyfriend)victim;
+            if (bf.isTamed()) {
+                return false;
+            }
+        }
+        ep = te.getOwner();
+        return ep != null;
+    }
 }

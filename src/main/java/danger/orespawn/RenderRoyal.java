@@ -1,60 +1,72 @@
 package danger.orespawn;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.IItemRenderer;
-import org.lwjgl.opengl.GL11;
+import net.minecraftforge.client.*;
+import net.minecraft.util.*;
+import net.minecraft.item.*;
+import org.lwjgl.opengl.*;
+import cpw.mods.fml.client.*;
 
-public class RenderRoyal implements IItemRenderer {
-  private static final ResourceLocation texture = new ResourceLocation("orespawn", "Royaltexture.png");
-  
-  protected ModelSlice modelSlice = new ModelSlice();
-  
-  public boolean handleRenderType(ItemStack item, IItemRenderer.ItemRenderType type) {
-    switch (type) {
-      case EQUIPPED:
+public class RenderRoyal implements IItemRenderer
+{
+    protected ModelSlice modelSlice;
+    private static final ResourceLocation texture;
+    
+    public RenderRoyal() {
+        this.modelSlice = new ModelSlice();
+    }
+    
+    public boolean handleRenderType(final ItemStack item, final IItemRenderer.ItemRenderType type) {
+        switch (type) {
+            case EQUIPPED:
+            case EQUIPPED_FIRST_PERSON: {
+                return true;
+            }
+            default: {
+                return false;
+            }
+        }
+    }
+    
+    public boolean shouldUseRenderHelper(final IItemRenderer.ItemRenderType type, final ItemStack item, final IItemRenderer.ItemRendererHelper helper) {
         return true;
-      case EQUIPPED_FIRST_PERSON:
-        return true;
-    } 
-    return false;
-  }
-  
-  public boolean shouldUseRenderHelper(IItemRenderer.ItemRenderType type, ItemStack item, IItemRenderer.ItemRendererHelper helper) {
-    return true;
-  }
-  
-  public void renderItem(IItemRenderer.ItemRenderType type, ItemStack item, Object... data) {
-    switch (type) {
-      case EQUIPPED:
-        renderSwordF5(-4.0F, 2.0F, -3.0F, 0.35F);
-        break;
-      case EQUIPPED_FIRST_PERSON:
-        renderSword(6.0F, 3.0F, -5.0F, 0.35F);
-        break;
-    } 
-  }
-  
-  private void renderSword(float x, float y, float z, float scale) {
-    GL11.glPushMatrix();
-    GL11.glRotatef(190.0F, 1.0F, 0.0F, 0.0F);
-    GL11.glRotatef(25.0F, 0.0F, 0.0F, 1.0F);
-    GL11.glScalef(scale, scale, scale);
-    GL11.glTranslatef(x, y, z);
-    (FMLClientHandler.instance().getClient()).renderEngine.bindTexture(texture);
-    this.modelSlice.render();
-    GL11.glPopMatrix();
-  }
-  
-  private void renderSwordF5(float x, float y, float z, float scale) {
-    GL11.glPushMatrix();
-    GL11.glRotatef(90.0F, 1.0F, 0.0F, 0.0F);
-    GL11.glRotatef(-90.0F, 0.0F, 0.0F, 1.0F);
-    GL11.glScalef(scale, scale, scale);
-    GL11.glTranslatef(x, y, z);
-    (FMLClientHandler.instance().getClient()).renderEngine.bindTexture(texture);
-    this.modelSlice.render();
-    GL11.glPopMatrix();
-  }
+    }
+    
+    public void renderItem(final IItemRenderer.ItemRenderType type, final ItemStack item, final Object... data) {
+        switch (type) {
+            case EQUIPPED: {
+                this.renderSwordF5();
+                break;
+            }
+            case EQUIPPED_FIRST_PERSON: {
+                this.renderSword();
+                break;
+            }
+        }
+    }
+    
+    private void renderSword() {
+        GL11.glPushMatrix();
+        GL11.glRotatef(190.0f, 1.0f, 0.0f, 0.0f);
+        GL11.glRotatef(25.0f, 0.0f, 0.0f, 1.0f);
+        GL11.glScalef((float) 0.35, (float) 0.35, (float) 0.35);
+        GL11.glTranslatef((float) 6.0, (float) 3.0, (float) -5.0);
+        FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderRoyal.texture);
+        this.modelSlice.render();
+        GL11.glPopMatrix();
+    }
+    
+    private void renderSwordF5() {
+        GL11.glPushMatrix();
+        GL11.glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+        GL11.glRotatef(-90.0f, 0.0f, 0.0f, 1.0f);
+        GL11.glScalef((float) 0.35, (float) 0.35, (float) 0.35);
+        GL11.glTranslatef((float) -4.0, (float) 2.0, (float) -3.0);
+        FMLClientHandler.instance().getClient().renderEngine.bindTexture(RenderRoyal.texture);
+        this.modelSlice.render();
+        GL11.glPopMatrix();
+    }
+    
+    static {
+        texture = new ResourceLocation("orespawn", "Royaltexture.png");
+    }
 }
