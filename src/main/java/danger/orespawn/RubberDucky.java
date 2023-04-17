@@ -68,8 +68,8 @@ public class RubberDucky extends EntityTameable
     
     protected void entityInit() {
         super.entityInit();
-        this.dataWatcher.addObject(23, 0);
-        this.dataWatcher.addObject(22, 0);
+        this.dataWatcher.addObject(23, (byte) 0);
+        this.dataWatcher.addObject(22, (byte) 0);
         this.setSitting(false);
         if (this.getGrowingAge() < 0) {
             this.setGrowingAge(-this.getGrowingAge());
