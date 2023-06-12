@@ -1,0 +1,55 @@
+{
+  "variants": {
+    "normal": {
+      "model": "orespawn:corn_plant0"
+    },
+    "stage=0": {
+      "model": "orespawn:corn_plant0"
+    },
+    "stage=1": {
+      "model": "orespawn:corn_plant1"
+    },
+    "stage=2": {
+      "model": "orespawn:corn_plant2"
+    },
+    "stage=3": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=4": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=5": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=6": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=7": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=8": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=9": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=10": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=11": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=12": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=13": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=14": {
+      "model": "orespawn:corn_plant3"
+    },
+    "stage=15": {
+      "model": "orespawn:corn_plant3"
+    }
+  }
+}

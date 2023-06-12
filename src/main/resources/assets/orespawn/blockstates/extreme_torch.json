@@ -1,0 +1,22 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "orespawn:extreme_torch_wall"
+    },
+    "facing=south": {
+      "y": 90,
+      "model": "orespawn:extreme_torch_wall"
+    },
+    "facing=north": {
+      "y": 270,
+      "model": "orespawn:extreme_torch_wall"
+    },
+    "facing=up": {
+      "model": "orespawn:extreme_torch"
+    },
+    "facing=west": {
+      "y": 180,
+      "model": "orespawn:extreme_torch_wall"
+    }
+  }
+}

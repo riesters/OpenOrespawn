@@ -1,5 +1,6 @@
 package danger.orespawn;
 
+@Deprecated
 public class OreSpawnConstants
 {
     public static final int OREBLOCK_START_OFFSET = 0;

@@ -1,0 +1,6 @@
+{
+  "parent": "block/crop",
+  "textures": {
+    "crop": "orespawn:blocks/firefly_2"
+  }
+}

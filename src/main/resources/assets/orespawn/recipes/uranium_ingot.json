@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "orespawn:uranium_nugget"
+    }
+  },
+  "result": {
+    "item": "orespawn:uranium_ingot",
+    "count": 1
+  }
+}

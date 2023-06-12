@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "normal": {
+      "model": "orespawn:ant_block"
+    },
+    "snowy=false": {
+      "model": "orespawn:ant_block"
+    },
+    "snowy=true": {
+      "model": "orespawn:ant_block"
+    }
+  }
+}

@@ -1,0 +1,124 @@
+package danger.orespawn.util.handlers;
+
+import net.minecraft.util.*;
+import net.minecraftforge.fml.common.registry.*;
+import net.minecraftforge.registries.*;
+
+public class SoundsHandler
+{
+    public static SoundEvent LITTLE_SPLAT;
+    public static SoundEvent BIG_SPLAT;
+    public static SoundEvent ENTITY_ALOSAURUS_LIVING;
+    public static SoundEvent ENTITY_ALOSAURUS_HURT;
+    public static SoundEvent ENTITY_ALOSAURUS_DEATH;
+    public static SoundEvent ENTITY_TREX_AMBIENT;
+    public static SoundEvent ENTITY_TREX_DEATH;
+    public static SoundEvent ENTITY_DUCK_HURT;
+    public static SoundEvent ENTITY_CRYO_HURT;
+    public static SoundEvent ENTITY_CRYO_DEATH;
+    public static SoundEvent ENTITY_CRYO_LIVING;
+    public static SoundEvent ENTITY_BIRD_BIRD1;
+    public static SoundEvent ENTITY_BIRD_BIRD2;
+    public static SoundEvent ENTITY_BIRD_BIRD3;
+    public static SoundEvent ENTITY_BIRD_BIRD4;
+    public static SoundEvent ENTITY_BIRD_BIRD5;
+    public static SoundEvent ENTITY_BIRD_BIRD6;
+    public static SoundEvent ENTITY_BIRD_BIRD7;
+    public static SoundEvent ENTITY_BIRD_BIRD8;
+    public static SoundEvent ENTITY_BIRD_BIRD9;
+    public static SoundEvent ENTITY_BIRD_BIRD10;
+    public static SoundEvent ENTITY_BIRD_BIRD11;
+    public static SoundEvent ENTITY_BIRD_BIRD12;
+    public static SoundEvent ENTITY_BIRD_BIRD13;
+    public static SoundEvent ENTITY_BIRD_BIRD14;
+    public static SoundEvent ENTITY_BIRD_BIRD15;
+    public static SoundEvent ENTITY_BIRD_BIRD16;
+    public static SoundEvent ENTITY_BIRD_BIRD17;
+    public static SoundEvent ENTITY_BIRD_BIRD18;
+    public static SoundEvent ENTITY_BIRD_BIRD19;
+    public static SoundEvent ENTITY_BIRD_BIRD20;
+    public static SoundEvent ENTITY_BIRD_BIRD21;
+    public static SoundEvent ENTITY_BIRD_BIRD22;
+    public static SoundEvent ENTITY_BIRD_BIRD23;
+    public static SoundEvent ENTITY_GAMMAMETROID_LIVING;
+    public static SoundEvent ENTITY_DRAGONFLY_LIVING;
+    public static SoundEvent ENTITY_DRAGONFLY_HURT;
+    public static SoundEvent ENTITY_MOSQUITO_LIVING;
+    public static SoundEvent ENTITY_ALIEN_LIVING;
+    public static SoundEvent ENTITY_ALIEN_HURT;
+    public static SoundEvent ENTITY_CATERKILLER_LIVING1;
+    public static SoundEvent ENTITY_CATERKILLER_LIVING2;
+    public static SoundEvent ENTITY_CATERKILLER_LIVING3;
+    public static SoundEvent ENTITY_CATERKILLER_LIVING4;
+    public static SoundEvent ENTITY_SCORPION_HIT;
+    public static SoundEvent CHAINSAW;
+    public static SoundEvent ENTITY_MOTHRA_WINGS;
+    public static SoundEvent ENTITY_KYUUBI_LIVING;
+    public static SoundEvent ENTITY_STINKBUG_FART1;
+    public static SoundEvent ENTITY_STINKBUG_FART2;
+    public static SoundEvent ENTITY_STINKBUG_FART3;
+    public static SoundEvent ENTITY_STINKBUG_FART4;
+    public static SoundEvent ENTITY_STINKBUG_FART5;
+    public static SoundEvent ENTITY_STINKBUG_FART6;
+    public static SoundEvent ENTITY_STINKBUG_FART7;
+    public static SoundEvent ENTITY_STINKBUG_FART8;
+    public static SoundEvent ENTITY_STINKBUG_FART9;
+    
+    public static void registerSounds() {
+        SoundsHandler.LITTLE_SPLAT = registerSound("little_splat");
+        SoundsHandler.BIG_SPLAT = registerSound("big_splat");
+        SoundsHandler.ENTITY_ALOSAURUS_LIVING = registerSound("entity.alosaurus.living");
+        SoundsHandler.ENTITY_ALOSAURUS_HURT = registerSound("entity.alosaurus.hurt");
+        SoundsHandler.ENTITY_ALOSAURUS_DEATH = registerSound("entity.alosaurus.death");
+        SoundsHandler.ENTITY_TREX_AMBIENT = registerSound("entity.trex.ambient");
+        SoundsHandler.ENTITY_TREX_DEATH = registerSound("entity.trex.death");
+        SoundsHandler.ENTITY_DUCK_HURT = registerSound("entity.duck.hurt");
+        SoundsHandler.ENTITY_CRYO_HURT = registerSound("entity.cryo.hurt");
+        SoundsHandler.ENTITY_CRYO_DEATH = registerSound("entity.cryo.death");
+        SoundsHandler.ENTITY_CRYO_LIVING = registerSound("entity.cryo.living");
+        SoundsHandler.ENTITY_BIRD_BIRD1 = registerSound("entity.birds.birds1");
+        SoundsHandler.ENTITY_BIRD_BIRD2 = registerSound("entity.birds.birds2");
+        SoundsHandler.ENTITY_BIRD_BIRD3 = registerSound("entity.birds.birds3");
+        SoundsHandler.ENTITY_BIRD_BIRD4 = registerSound("entity.birds.birds4");
+        SoundsHandler.ENTITY_BIRD_BIRD5 = registerSound("entity.birds.birds5");
+        SoundsHandler.ENTITY_BIRD_BIRD6 = registerSound("entity.birds.birds6");
+        SoundsHandler.ENTITY_BIRD_BIRD7 = registerSound("entity.birds.birds7");
+        SoundsHandler.ENTITY_BIRD_BIRD8 = registerSound("entity.birds.birds8");
+        SoundsHandler.ENTITY_BIRD_BIRD9 = registerSound("entity.birds.birds9");
+        SoundsHandler.ENTITY_BIRD_BIRD10 = registerSound("entity.birds.birds10");
+        SoundsHandler.ENTITY_BIRD_BIRD11 = registerSound("entity.birds.birds11");
+        SoundsHandler.ENTITY_BIRD_BIRD12 = registerSound("entity.birds.birds12");
+        SoundsHandler.ENTITY_BIRD_BIRD13 = registerSound("entity.birds.birds13");
+        SoundsHandler.ENTITY_BIRD_BIRD14 = registerSound("entity.birds.birds14");
+        SoundsHandler.ENTITY_BIRD_BIRD15 = registerSound("entity.birds.birds15");
+        SoundsHandler.ENTITY_BIRD_BIRD16 = registerSound("entity.birds.birds16");
+        SoundsHandler.ENTITY_BIRD_BIRD17 = registerSound("entity.birds.birds17");
+        SoundsHandler.ENTITY_BIRD_BIRD18 = registerSound("entity.birds.birds18");
+        SoundsHandler.ENTITY_BIRD_BIRD19 = registerSound("entity.birds.birds19");
+        SoundsHandler.ENTITY_BIRD_BIRD20 = registerSound("entity.birds.birds20");
+        SoundsHandler.ENTITY_BIRD_BIRD21 = registerSound("entity.birds.birds21");
+        SoundsHandler.ENTITY_BIRD_BIRD22 = registerSound("entity.birds.birds22");
+        SoundsHandler.ENTITY_BIRD_BIRD23 = registerSound("entity.birds.birds23");
+        SoundsHandler.ENTITY_GAMMAMETROID_LIVING = registerSound("entity.gammametroid.living");
+        SoundsHandler.ENTITY_ALIEN_LIVING = registerSound("entity.alien.living");
+        SoundsHandler.ENTITY_ALIEN_HURT = registerSound("entity.alien.hurt");
+        SoundsHandler.ENTITY_MOTHRA_WINGS = registerSound("entity.mothra.wings");
+        SoundsHandler.ENTITY_STINKBUG_FART1 = registerSound("entity.stinkbug.fart1");
+        SoundsHandler.ENTITY_STINKBUG_FART2 = registerSound("entity.stinkbug.fart2");
+        SoundsHandler.ENTITY_STINKBUG_FART3 = registerSound("entity.stinkbug.fart3");
+        SoundsHandler.ENTITY_STINKBUG_FART4 = registerSound("entity.stinkbug.fart4");
+        SoundsHandler.ENTITY_STINKBUG_FART5 = registerSound("entity.stinkbug.fart5");
+        SoundsHandler.ENTITY_STINKBUG_FART6 = registerSound("entity.stinkbug.fart6");
+        SoundsHandler.ENTITY_STINKBUG_FART7 = registerSound("entity.stinkbug.fart7");
+        SoundsHandler.ENTITY_STINKBUG_FART8 = registerSound("entity.stinkbug.fart8");
+        SoundsHandler.ENTITY_STINKBUG_FART9 = registerSound("entity.stinkbug.fart9");
+    }
+    
+    private static SoundEvent registerSound(final String name) {
+        final ResourceLocation location = new ResourceLocation("orespawn", name);
+        final SoundEvent event = new SoundEvent(location);
+        event.setRegistryName(name);
+        ForgeRegistries.SOUND_EVENTS.register(event);
+        return event;
+    }
+}

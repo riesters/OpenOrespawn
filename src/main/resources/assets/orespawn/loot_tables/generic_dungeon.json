@@ -1,0 +1,113 @@
+{
+  "pools": [
+    {
+      "name":"main",
+      "rolls": {
+        "min": 3,
+        "max": 5
+      },
+      "entries": [
+        {
+          "type": "item",
+          "name": "orespawn:emerald_pickaxe",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:emerald_shovel",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:emerald_sword",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:emerald_hoe",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:emerald_axe",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:emerald_helmet",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:emerald_chestplate",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:emerald_leggings",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:emerald_boots",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:cryolophosaurus_egg",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:velocityraptor_egg",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:dragonfly_egg",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:bird_egg",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:spyro_egg",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:baryonyx_egg",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:gammametroid_egg",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:alien_egg",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:nastysaurus_egg",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:pointysaurus_egg",
+          "weight": 15
+        },
+        {
+          "type": "item",
+          "name": "orespawn:empty_cage",
+          "weight": 15
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "III",
+    "III",
+    "III"
+  ],
+  "key": {
+    "I": {
+      "item": "orespawn:titanium_ingot"
+    }
+  },
+  "result": {
+    "item": "orespawn:titanium_block",
+    "count": 1
+  }
+}
