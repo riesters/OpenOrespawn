@@ -50,7 +50,7 @@ public class Skate extends EntityMob
     
     protected void entityInit() {
         super.entityInit();
-        this.dataWatcher.addObject(20, 0);
+        this.dataWatcher.addObject(20, (byte) 0);
     }
     
     protected boolean canDespawn() {
